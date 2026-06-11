@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Google Ads Audit — Painted Black Restaurant, Tirana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black:#0A0A0C;
+  --deep:#111118;
+  --panel:#13131C;
+  --glass:rgba(255,255,255,0.03);
+  --glass-border:rgba(201,162,39,0.18);
+  --gold:#C9A227;
+  --gold-dim:#8A6E1A;
+  --gold-glow:rgba(201,162,39,0.15);
+  --red:#EF4444;
+  --red-glow:rgba(239,68,68,0.15);
+  --green:#22C55E;
+  --green-glow:rgba(34,197,94,0.12);
+  --amber:#F59E0B;
+  --amber-glow:rgba(245,158,11,0.12);
+  --blue:#3B82F6;
+  --mist:#94A3B8;
+  --whisper:#64748B;
+  --white:#F8FAFC;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--gold) var(--black);}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--black);}
+::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:2px;}
+
+body{
+  background:var(--black);
+  color:var(--white);
+  font-family:'Inter',sans-serif;
+  overflow-x:hidden;
+}
+
+/* ── CANVAS ── */
+#bg-canvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 3rem;
+  background:rgba(10,10,12,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(201,162,39,0.1);
+  transition:all .3s;
+}
+.nav-brand{
+  display:flex;align-items:center;gap:.7rem;
+}
+.nav-brand img{width:28px;height:28px;object-fit:contain;filter:brightness(1.1);}
+.nav-brand span{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem;letter-spacing:.2em;color:var(--gold);
+  text-transform:uppercase;font-weight:300;
+}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{
+  font-size:.72rem;letter-spacing:.15em;color:var(--mist);
+  text-decoration:none;text-transform:uppercase;
+  transition:color .2s;font-weight:500;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-tag{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;color:var(--whisper);letter-spacing:.05em;
+}
+
+/* ── LAYOUT ── */
+main{position:relative;z-index:1;}
+section{min-height:100vh;padding:7rem 3rem 4rem;}
+.container{max-width:1200px;margin:0 auto;}
+.narrow{max-width:900px;margin:0 auto;}
+
+/* ── REVEAL ANIMATIONS ── */
+.reveal{
+  opacity:0;transform:translateY(40px);
+  transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);
+}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-left{
+  opacity:0;transform:translateX(-40px);
+  transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);
+}
+.reveal-left.visible{opacity:1;transform:translateX(0);}
+.reveal-right{
+  opacity:0;transform:translateX(40px);
+  transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1);
+}
+.reveal-right.visible{opacity:1;transform:translateX(0);}
+
+/* ── EYEBROW ── */
+.eyebrow{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:.25em;color:var(--gold);
+  text-transform:uppercase;margin-bottom:.8rem;
+  display:flex;align-items:center;gap:.8rem;
+}
+.eyebrow::before{content:'';width:24px;height:1px;background:var(--gold);}
+
+/* ── HEADLINES ── */
+h1.display{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3rem,8vw,7rem);
+  font-weight:300;line-height:1;
+  letter-spacing:-.02em;color:var(--white);
+}
+h2.section-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.2rem,4vw,3.5rem);
+  font-weight:300;line-height:1.1;
+  letter-spacing:-.01em;color:var(--white);
+  margin-bottom:2.5rem;
+}
+h3.card-title{
+  font-size:.85rem;font-weight:600;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--white);margin-bottom:.4rem;
+}
+
+/* ── GLASS CARDS ── */
+.card{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:12px;
+  backdrop-filter:blur(20px);
+  transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s;
+}
+.card:hover{
+  transform:translateY(-4px) scale(1.01);
+  box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 1px rgba(201,162,39,.25);
+}
+.card-gold{border-color:rgba(201,162,39,.35);box-shadow:0 0 40px var(--gold-glow);}
+.card-red{border-color:rgba(239,68,68,.35);box-shadow:0 0 40px var(--red-glow);}
+.card-green{border-color:rgba(34,197,94,.3);box-shadow:0 0 40px var(--green-glow);}
+.card-amber{border-color:rgba(245,158,11,.3);box-shadow:0 0 30px var(--amber-glow);}
+
+/* ── HERO ── */
+#hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0;position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,#0A0A0C 0%,#0F0F16 40%,#0A0A0C 100%);
+}
+.hero-img{
+  position:absolute;inset:0;
+  background:url('https://static.wixstatic.com/media/c837a6_2828dec337374714b0631f4aab1cb4b8f000.jpg') center/cover no-repeat;
+  opacity:.18;filter:saturate(0.3) brightness(0.7);
+}
+.hero-content{
+  position:relative;z-index:2;
+  padding:7rem 3rem 5rem;max-width:1200px;margin:0 auto;width:100%;
+}
+.hero-pretitle{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.7rem;letter-spacing:.3em;color:var(--gold);
+  text-transform:uppercase;margin-bottom:2rem;
+  display:flex;align-items:center;gap:1rem;
+}
+.hero-pretitle::before{content:'';width:40px;height:1px;background:var(--gold);}
+.hero-line-1{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.2rem,3vw,2rem);
+  font-weight:300;letter-spacing:.15em;
+  color:var(--mist);text-transform:uppercase;
+  display:block;margin-bottom:.3rem;
+}
+.hero-main{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(4rem,12vw,9.5rem);
+  font-weight:300;line-height:.95;letter-spacing:-.03em;
+  color:var(--white);display:block;
+}
+.hero-main em{color:var(--gold);font-style:italic;}
+.hero-subtitle{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.5rem,3vw,2.4rem);
+  font-weight:300;letter-spacing:.05em;
+  color:var(--mist);margin-top:1.5rem;display:block;
+  font-style:italic;
+}
+.hero-meta{
+  display:flex;align-items:center;gap:2rem;
+  margin-top:3rem;flex-wrap:wrap;
+}
+.hero-meta-item{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;color:var(--whisper);letter-spacing:.12em;
+}
+.hero-meta-item span{color:var(--gold);}
+.hero-scroll{
+  position:absolute;bottom:2.5rem;right:3rem;
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  font-family:'JetBrains Mono',monospace;font-size:.55rem;
+  letter-spacing:.2em;color:var(--whisper);text-transform:uppercase;
+}
+.scroll-line{width:1px;height:50px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollAnim 2s ease-in-out infinite;}
+@keyframes scrollAnim{0%,100%{opacity:.2;transform:scaleY(.5);transform-origin:top;}50%{opacity:1;transform:scaleY(1);transform-origin:top;}}
+
+/* ── SUMMARY STATS ── */
+#summary{background:linear-gradient(to bottom,var(--black),var(--deep));}
+.stats-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;
+  margin:3rem 0 3.5rem;
+}
+.stat-card{
+  padding:2.5rem 2rem;
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:12px;backdrop-filter:blur(16px);
+  position:relative;overflow:hidden;
+}
+.stat-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.stat-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.5rem,5vw,4rem);font-weight:300;
+  line-height:1;color:var(--gold);
+  display:block;
+}
+.stat-label{
+  font-size:.7rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--mist);
+  margin-top:.5rem;display:block;
+}
+.stat-sub{font-size:.75rem;color:var(--whisper);margin-top:.3rem;}
+
+.alert-box{
+  padding:2rem 2.5rem;
+  border-radius:12px;border-left:4px solid var(--red);
+  background:rgba(239,68,68,.06);
+  border-top:1px solid rgba(239,68,68,.2);
+  border-right:1px solid rgba(239,68,68,.08);
+  border-bottom:1px solid rgba(239,68,68,.08);
+  position:relative;overflow:hidden;
+}
+.alert-box::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at left center,rgba(239,68,68,.08) 0%,transparent 60%);
+}
+.alert-label{
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  letter-spacing:.2em;color:var(--red);text-transform:uppercase;
+  margin-bottom:.6rem;display:flex;align-items:center;gap:.6rem;
+}
+.pulse-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--red);
+  animation:pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,.6);}50%{box-shadow:0 0 0 8px rgba(239,68,68,0);}}
+
+.alert-box-gold{
+  border-left-color:var(--amber);
+  background:rgba(245,158,11,.05);
+  border-top-color:rgba(245,158,11,.2);
+  border-right-color:rgba(245,158,11,.08);
+  border-bottom-color:rgba(245,158,11,.08);
+}
+.alert-box-gold::before{background:radial-gradient(ellipse at left center,rgba(245,158,11,.08) 0%,transparent 60%);}
+.alert-box-gold .alert-label{color:var(--amber);}
+.alert-box-gold .pulse-dot{background:var(--amber);animation-name:pulseAmber;}
+@keyframes pulseAmber{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.6);}50%{box-shadow:0 0 0 8px rgba(245,158,11,0);}}
+
+.alert-box-green{
+  border-left-color:var(--green);
+  background:rgba(34,197,94,.05);
+  border-top-color:rgba(34,197,94,.2);
+  border-right-color:rgba(34,197,94,.08);
+  border-bottom-color:rgba(34,197,94,.08);
+}
+.alert-box-green::before{background:radial-gradient(ellipse at left center,rgba(34,197,94,.08) 0%,transparent 60%);}
+.alert-box-green .alert-label{color:var(--green);}
+.alert-box-green .pulse-dot{background:var(--green);}
+
+/* ── CAMPAIGNS ── */
+#campaigns{background:var(--deep);}
+.campaigns-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2.5rem;}
+.campaign-card{
+  padding:2.5rem;border-radius:16px;
+  border:1px solid var(--glass-border);
+  background:linear-gradient(135deg,rgba(255,255,255,.025) 0%,rgba(255,255,255,.01) 100%);
+  backdrop-filter:blur(20px);
+  transition:transform .4s cubic-bezier(.16,1,.3,1),box-shadow .4s;
+  position:relative;overflow:hidden;
+}
+.campaign-card:hover{transform:translateY(-6px);box-shadow:0 30px 80px rgba(0,0,0,.5);}
+.campaign-card.working{border-color:rgba(201,162,39,.3);box-shadow:0 0 50px rgba(201,162,39,.08);}
+.campaign-card.broken{border-color:rgba(239,68,68,.25);box-shadow:0 0 50px rgba(239,68,68,.06);}
+.campaign-card-header{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  margin-bottom:2rem;
+}
+.campaign-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.4rem;font-weight:300;
+  color:var(--white);line-height:1.3;max-width:60%;
+}
+.status-badge{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:.35rem .8rem;border-radius:20px;
+  border:1px solid;white-space:nowrap;
+}
+.status-enabled{color:var(--green);border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.08);}
+.status-warn{color:var(--amber);border-color:rgba(245,158,11,.4);background:rgba(245,158,11,.08);}
+.status-error{color:var(--red);border-color:rgba(239,68,68,.4);background:rgba(239,68,68,.08);}
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+.metric-item{}
+.metric-val{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.9rem;font-weight:300;color:var(--white);
+  display:block;line-height:1;
+}
+.metric-val.gold{color:var(--gold);}
+.metric-val.red{color:var(--red);}
+.metric-val.green{color:var(--green);}
+.metric-key{
+  font-size:.62rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--whisper);
+  margin-top:.25rem;display:block;
+}
+.campaign-divider{
+  height:1px;background:linear-gradient(90deg,var(--glass-border),transparent);
+  margin:1.5rem 0;
+}
+.campaign-type-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:.1em;color:var(--mist);text-transform:uppercase;
+}
+.type-dot{width:5px;height:5px;border-radius:50%;}
+
+/* ── POLICY VIOLATION ── */
+.violation-card{
+  margin-top:1rem;padding:1rem 1.2rem;border-radius:8px;
+  background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);
+  display:flex;align-items:flex-start;gap:.8rem;
+}
+.violation-icon{font-size:1rem;flex-shrink:0;margin-top:.1rem;}
+.violation-text{font-size:.75rem;color:var(--mist);line-height:1.5;}
+.violation-text strong{color:var(--amber);}
+
+/* ── CONVERSION TRACKING ── */
+#conversions{background:linear-gradient(to bottom,var(--deep),var(--black));}
+.issues-list{display:flex;flex-direction:column;gap:1rem;margin-top:2.5rem;}
+.issue-row{
+  display:grid;grid-template-columns:auto 1fr auto;
+  align-items:center;gap:1.5rem;
+  padding:1.2rem 1.8rem;border-radius:10px;
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  backdrop-filter:blur(12px);
+  transition:background .3s,border-color .3s,transform .3s;
+  cursor:default;
+}
+.issue-row:hover{
+  background:rgba(255,255,255,.04);
+  transform:translateX(4px);
+}
+.issue-row.crit{border-left:3px solid var(--red);}
+.issue-row.high{border-left:3px solid var(--amber);}
+.issue-row.ok{border-left:3px solid var(--green);}
+.severity-badge{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.58rem;letter-spacing:.12em;
+  padding:.3rem .7rem;border-radius:6px;
+  text-transform:uppercase;font-weight:500;
+  white-space:nowrap;
+}
+.sev-crit{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.3);}
+.sev-high{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.3);}
+.sev-ok{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.25);}
+.issue-name{
+  font-size:.9rem;font-weight:500;color:var(--white);
+}
+.issue-desc{font-size:.75rem;color:var(--mist);margin-top:.2rem;}
+.issue-status{
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;
+  color:var(--whisper);letter-spacing:.08em;text-align:right;
+  white-space:nowrap;
+}
+
+/* ── CONVERSION ARCHITECTURE ── */
+.arch-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;
+  margin-top:2rem;
+}
+.arch-card{
+  padding:1.5rem;border-radius:10px;text-align:center;
+  background:var(--glass);border:1px solid var(--glass-border);
+}
+.arch-card.keep{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.04);}
+.arch-card.remove{border-color:rgba(239,68,68,.25);background:rgba(239,68,68,.04);opacity:.7;}
+.arch-card-icon{font-size:1.5rem;margin-bottom:.6rem;}
+.arch-card-name{font-size:.72rem;font-weight:600;color:var(--white);margin-bottom:.3rem;}
+.arch-card-detail{font-size:.63rem;color:var(--mist);}
+.arch-card-verdict{
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  letter-spacing:.1em;margin-top:.6rem;
+  text-transform:uppercase;
+}
+.arch-keep{color:var(--green);}
+.arch-remove{color:var(--red);}
+
+/* ── WEBSITE / BOOKING FLOW ── */
+#website{background:var(--black);position:relative;overflow:hidden;}
+.website-bg-img{
+  position:absolute;right:0;top:0;width:45%;height:100%;
+  background:url('https://static.wixstatic.com/media/d664d9_7cface94549d42a493e9f53d35436a49~mv2.jpg') center/cover no-repeat;
+  opacity:.12;mask-image:linear-gradient(to left,rgba(0,0,0,.5) 0%,transparent 100%);
+  -webkit-mask-image:linear-gradient(to left,rgba(0,0,0,.5) 0%,transparent 100%);
+}
+.flow-steps{display:flex;align-items:stretch;gap:0;margin:2.5rem 0;}
+.flow-step{
+  flex:1;padding:1.8rem 1.5rem;
+  background:var(--glass);border:1px solid var(--glass-border);
+  position:relative;
+  transition:background .3s;
+}
+.flow-step:first-child{border-radius:12px 0 0 12px;}
+.flow-step:last-child{border-radius:0 12px 12px 0;}
+.flow-step.target{
+  background:rgba(34,197,94,.05);
+  border-color:rgba(34,197,94,.35);
+  box-shadow:0 0 40px rgba(34,197,94,.1);
+}
+.flow-step-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.5rem;font-weight:300;color:var(--gold);
+  opacity:.4;line-height:1;
+}
+.flow-step-label{
+  font-size:.65rem;letter-spacing:.15em;
+  text-transform:uppercase;color:var(--mist);
+  margin:.5rem 0 .3rem;
+}
+.flow-step-url{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.68rem;color:var(--white);word-break:break-all;
+}
+.flow-step.target .flow-step-url{color:var(--green);}
+.flow-arrow{
+  position:absolute;right:-1px;top:50%;transform:translateY(-50%);
+  width:20px;height:20px;background:var(--black);
+  clip-path:polygon(0 0,100% 50%,0 100%);
+  color:var(--glass-border);z-index:1;
+}
+.flow-tag{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:.12em;color:var(--green);text-transform:uppercase;
+  margin-top:.5rem;
+}
+
+/* ── FIXES ── */
+#fixes{background:linear-gradient(to bottom,var(--black),var(--deep));}
+.fixes-list{display:flex;flex-direction:column;gap:1.2rem;margin-top:2.5rem;}
+.fix-item{
+  display:grid;grid-template-columns:3.5rem 1fr;gap:1.5rem;
+  padding:1.8rem;border-radius:12px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  backdrop-filter:blur(16px);
+  transition:transform .3s,border-color .3s,box-shadow .3s;
+}
+.fix-item:hover{
+  transform:translateX(6px);
+  border-color:rgba(201,162,39,.3);
+  box-shadow:0 0 30px rgba(201,162,39,.06);
+}
+.fix-item.p1{border-left:3px solid var(--red);}
+.fix-item.p2{border-left:3px solid var(--amber);}
+.fix-item.p3{border-left:3px solid var(--blue);}
+.fix-item.p4{border-left:3px solid var(--whisper);}
+.fix-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.2rem;font-weight:300;
+  color:var(--gold);opacity:.5;line-height:1;
+  padding-top:.1rem;
+}
+.fix-priority{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.58rem;letter-spacing:.15em;
+  padding:.25rem .6rem;border-radius:4px;
+  text-transform:uppercase;
+  display:inline-flex;margin-bottom:.5rem;
+}
+.p1 .fix-priority{background:rgba(239,68,68,.15);color:var(--red);border:1px solid rgba(239,68,68,.25);}
+.p2 .fix-priority{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.2);}
+.p3 .fix-priority{background:rgba(59,130,246,.12);color:var(--blue);border:1px solid rgba(59,130,246,.2);}
+.p4 .fix-priority{background:rgba(100,116,139,.15);color:var(--mist);border:1px solid rgba(100,116,139,.25);}
+.fix-title{font-size:.9rem;font-weight:600;color:var(--white);margin-bottom:.35rem;}
+.fix-body{font-size:.78rem;color:var(--mist);line-height:1.6;}
+.fix-steps{
+  margin-top:.8rem;display:flex;flex-direction:column;gap:.3rem;
+}
+.fix-step{
+  display:flex;align-items:baseline;gap:.6rem;
+  font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--mist);
+}
+.fix-step-num{color:var(--gold);min-width:1.2rem;}
+.fix-step-text{color:var(--whisper);line-height:1.5;}
+
+/* ── ACCOUNT STRUCTURE WARNING ── */
+#account{background:var(--deep);position:relative;overflow:hidden;}
+.account-warning{
+  padding:3rem;border-radius:16px;
+  background:linear-gradient(135deg,rgba(239,68,68,.06) 0%,rgba(239,68,68,.02) 100%);
+  border:1px solid rgba(239,68,68,.2);
+  margin-bottom:2.5rem;position:relative;
+}
+.account-warning::before{
+  content:'';position:absolute;inset:0;border-radius:16px;
+  background:radial-gradient(ellipse at top left,rgba(239,68,68,.08) 0%,transparent 50%);
+}
+.warning-label{
+  font-family:'JetBrains Mono',monospace;font-size:.7rem;
+  letter-spacing:.2em;color:var(--red);text-transform:uppercase;
+  margin-bottom:1rem;display:flex;align-items:center;gap:.7rem;
+}
+.warning-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.5rem,3vw,2.5rem);font-weight:300;
+  color:var(--white);margin-bottom:1rem;line-height:1.2;
+}
+.compare-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem;
+}
+.compare-col{
+  padding:1.8rem;border-radius:10px;
+}
+.compare-col.stay{
+  background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.15);
+}
+.compare-col.fresh{
+  background:rgba(34,197,94,.04);border:1px solid rgba(34,197,94,.2);
+}
+.compare-col-title{
+  font-size:.75rem;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:1.2rem;
+  display:flex;align-items:center;gap:.6rem;
+}
+.compare-col.stay .compare-col-title{color:var(--red);}
+.compare-col.fresh .compare-col-title{color:var(--green);}
+.compare-item{
+  display:flex;align-items:flex-start;gap:.7rem;
+  font-size:.78rem;color:var(--mist);
+  margin-bottom:.6rem;line-height:1.5;
+}
+.compare-icon{flex-shrink:0;margin-top:.1rem;}
+.businesses-row{
+  display:flex;gap:1rem;flex-wrap:wrap;margin:1.5rem 0;
+}
+.biz-chip{
+  padding:.6rem 1.2rem;border-radius:8px;
+  font-family:'JetBrains Mono',monospace;font-size:.68rem;
+  letter-spacing:.08em;
+}
+.biz-chip.restaurant{background:rgba(201,162,39,.12);border:1px solid rgba(201,162,39,.3);color:var(--gold);}
+.biz-chip.other{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:var(--red);}
+
+/* ── ACTION PLAN ── */
+#action{background:linear-gradient(to bottom,var(--deep),var(--black));}
+.timeline{display:flex;flex-direction:column;gap:0;margin-top:2.5rem;position:relative;}
+.timeline::before{
+  content:'';position:absolute;left:5.5rem;top:0;bottom:0;
+  width:1px;background:linear-gradient(to bottom,var(--gold),transparent);
+}
+.timeline-item{
+  display:grid;grid-template-columns:6rem 1fr;gap:1.5rem;
+  padding:1.5rem 0;position:relative;
+}
+.timeline-item + .timeline-item::before{
+  content:'';position:absolute;top:0;left:5.4rem;right:0;
+  height:1px;background:var(--glass-border);
+}
+.timeline-week{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.2rem;font-weight:300;color:var(--gold);
+  text-align:right;padding-right:2rem;line-height:1.4;
+}
+.timeline-week small{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.55rem;letter-spacing:.1em;
+  color:var(--whisper);display:block;text-align:right;
+}
+.timeline-dot{
+  position:absolute;left:5.1rem;top:1.8rem;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--gold);box-shadow:0 0 12px var(--gold);
+}
+.timeline-items{display:flex;flex-direction:column;gap:.5rem;}
+.timeline-task{
+  display:flex;align-items:flex-start;gap:.7rem;
+  font-size:.78rem;color:var(--mist);line-height:1.5;
+}
+.task-priority{
+  font-family:'JetBrains Mono',monospace;font-size:.55rem;
+  padding:.2rem .5rem;border-radius:4px;
+  flex-shrink:0;margin-top:.1rem;
+  letter-spacing:.08em;text-transform:uppercase;
+}
+.tp1{background:rgba(239,68,68,.15);color:var(--red);}
+.tp2{background:rgba(245,158,11,.12);color:var(--amber);}
+.tp3{background:rgba(59,130,246,.12);color:var(--blue);}
+.tp4{background:rgba(100,116,139,.12);color:var(--mist);}
+
+/* ── FOOD GALLERY STRIP ── */
+.gallery-strip{
+  display:flex;gap:1rem;margin:2.5rem 0;overflow:hidden;height:180px;
+}
+.gallery-img{
+  flex:1;border-radius:10px;overflow:hidden;min-width:0;
+  transition:flex .5s cubic-bezier(.16,1,.3,1);
+  position:relative;
+}
+.gallery-img:hover{flex:2.5;}
+.gallery-img img{
+  width:100%;height:100%;object-fit:cover;
+  filter:saturate(.7) brightness(.8);
+  transition:filter .5s,transform .5s;
+}
+.gallery-img:hover img{filter:saturate(1) brightness(.9);transform:scale(1.05);}
+
+/* ── PHOTO + QUOTE DIVIDER ── */
+.divider-section{
+  height:60vh;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+}
+.divider-bg{
+  position:absolute;inset:0;
+  background:url('https://static.wixstatic.com/media/d664d9_f251aabf26ac4961ae7fb44d4e7fe537f000.jpg') center/cover no-repeat;
+  opacity:.25;filter:saturate(.2);
+  transform:scale(1.05);
+}
+.divider-quote{
+  position:relative;z-index:1;
+  text-align:center;padding:0 3rem;
+}
+.divider-quote blockquote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.5rem,3.5vw,2.8rem);
+  font-weight:300;font-style:italic;
+  color:var(--white);line-height:1.4;
+  letter-spacing:-.01em;
+}
+.divider-quote cite{
+  display:block;margin-top:1.5rem;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.65rem;letter-spacing:.2em;
+  color:var(--gold);text-transform:uppercase;
+}
+
+/* ── FOOTER ── */
+footer{
+  padding:3rem;border-top:1px solid rgba(255,255,255,.06);
+  background:var(--black);
+}
+.footer-content{
+  max-width:1200px;margin:0 auto;
+  display:flex;justify-content:space-between;align-items:flex-end;
+  flex-wrap:wrap;gap:1.5rem;
+}
+.footer-left{}
+.footer-restaurant{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem;font-weight:300;
+  letter-spacing:.08em;color:var(--gold);
+}
+.footer-tagline{
+  font-size:.7rem;letter-spacing:.1em;color:var(--whisper);
+  margin-top:.3rem;
+}
+.footer-right{text-align:right;}
+.footer-meta{
+  font-family:'JetBrains Mono',monospace;
+  font-size:.62rem;letter-spacing:.1em;
+  color:var(--whisper);line-height:1.8;
+}
+
+/* ── SECTION DIVIDER LINE ── */
+.section-rule{
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold-dim),transparent);
+  margin:4rem 0;opacity:.4;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem;}
+  .nav-links{display:none;}
+  section{padding:5rem 1.5rem 3rem;}
+  .stats-grid{grid-template-columns:1fr;gap:1rem;}
+  .campaigns-grid{grid-template-columns:1fr;}
+  .arch-grid{grid-template-columns:1fr 1fr;}
+  .compare-grid{grid-template-columns:1fr;}
+  .flow-steps{flex-direction:column;}
+  .flow-step:first-child{border-radius:12px 12px 0 0;}
+  .flow-step:last-child{border-radius:0 0 12px 12px;}
+  .timeline::before{left:3.5rem;}
+  .timeline-item{grid-template-columns:4rem 1fr;}
+  .timeline-dot{left:3.15rem;}
+}
+
+/* ── HOLO SHIMMER ── */
+@keyframes holoShimmer{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+.holo-border{
+  background:linear-gradient(135deg,var(--black),var(--panel));
+  border:1px solid transparent;
+  background-clip:padding-box;
+  position:relative;
+}
+.holo-border::after{
+  content:'';position:absolute;inset:-1px;
+  background:linear-gradient(135deg,var(--gold-dim),transparent,var(--gold-dim),transparent);
+  background-size:300% 300%;
+  animation:holoShimmer 4s ease infinite;
+  border-radius:inherit;z-index:-1;
+  opacity:.6;
+}
+
+/* ── FLOATING LABEL ── */
+.floating-label{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;
+  letter-spacing:.15em;color:var(--whisper);text-transform:uppercase;
+  padding:.3rem .8rem;border-radius:20px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+  display:inline-block;margin-bottom:1rem;
+}
+
+/* ── PERFORMANCE BAR ── */
+.perf-bar-wrap{margin:.8rem 0;}
+.perf-bar-label{
+  display:flex;justify-content:space-between;
+  font-size:.68rem;color:var(--mist);margin-bottom:.35rem;
+}
+.perf-bar-track{height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;}
+.perf-bar-fill{
+  height:100%;border-radius:2px;
+  transition:width 1.5s cubic-bezier(.16,1,.3,1) .3s;
+  width:0%;
+}
+.perf-bar-fill.gold{background:linear-gradient(90deg,var(--gold-dim),var(--gold));}
+.perf-bar-fill.green{background:linear-gradient(90deg,#15803D,var(--green));}
+.perf-bar-fill.red{background:linear-gradient(90deg,#991B1B,var(--red));}
+</style>
+</head>
+<body>
+
+<canvas id="bg-canvas"></canvas>
+
+<nav>
+  <div class="nav-brand">
+    <img src="https://static.wixstatic.com/media/d664d9_52f1ee1fc0cc4ee68b9bb61875a4f1e2~mv2.png" alt="Painted Black">
+    <span>Painted Black</span>
+  </div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#summary">Summary</a></li>
+    <li><a href="#campaigns">Campaigns</a></li>
+    <li><a href="#conversions">Conversions</a></li>
+    <li><a href="#website">Booking Flow</a></li>
+    <li><a href="#fixes">Fixes</a></li>
+    <li><a href="#account">Account</a></li>
+    <li><a href="#action">Action Plan</a></li>
+  </ul>
+  <div class="nav-tag">Account: 617-879-6307</div>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════════════ HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-img"></div>
+  <div class="hero-content">
+    <div class="hero-pretitle reveal">Google Ads Audit — June 2026</div>
+    <span class="hero-line-1 reveal" style="transition-delay:.1s">Italian Noir Restaurant — Tirana, Albania</span>
+    <span class="hero-main reveal" style="transition-delay:.2s">
+      <em>Painted</em> Black
+    </span>
+    <span class="hero-subtitle reveal" style="transition-delay:.3s">Full Account Review & Optimisation Report</span>
+    <div class="hero-meta reveal" style="transition-delay:.4s">
+      <div class="hero-meta-item">Account: <span>617-879-6307</span></div>
+      <div class="hero-meta-item">Data Period: <span>June 5–10, 2026</span></div>
+      <div class="hero-meta-item">Status: <span>2 Active Campaigns</span></div>
+      <div class="hero-meta-item">Critical Issues: <span>7 Identified</span></div>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ GALLERY STRIP -->
+<div class="gallery-strip" style="padding:0 3rem;background:var(--black);position:relative;z-index:1;">
+  <div class="gallery-img"><img src="https://static.wixstatic.com/media/d664d9_9240b00fd2804545be04c74205ea979e~mv2.jpg" alt=""></div>
+  <div class="gallery-img"><img src="https://static.wixstatic.com/media/d664d9_7cface94549d42a493e9f53d35436a49~mv2.jpg" alt=""></div>
+  <div class="gallery-img"><img src="https://static.wixstatic.com/media/d664d9_591449f2a1424a6b8bcaf167a97e5d8c~mv2.jpg" alt=""></div>
+  <div class="gallery-img"><img src="https://static.wixstatic.com/media/d664d9_e12d83f519f04b4e8eeed015746acec1~mv2.jpg" alt=""></div>
+  <div class="gallery-img"><img src="https://static.wixstatic.com/media/10726f_813a2bd987f9443cb9c5e043a903655af003.jpg" alt=""></div>
+  <div class="gallery-img"><img src="https://static.wixstatic.com/media/d664d9_40cbc01888144dc3bee097fd124ec923~mv2.jpg" alt=""></div>
+</div>
+
+<!-- ═══════════════════════════════ EXECUTIVE SUMMARY -->
+<section id="summary">
+  <div class="container">
+    <div class="eyebrow reveal">01 — Executive Summary</div>
+    <h2 class="section-title reveal" style="transition-delay:.1s">The bottom line:<br><em style="font-style:italic;color:var(--gold)">strong campaigns,<br>broken measurement.</em></h2>
+
+    <div class="stats-grid">
+      <div class="stat-card reveal" style="transition-delay:.1s">
+        <span class="stat-num" data-count="76311">0</span>
+        <span class="stat-label">Total Impressions (5 days)</span>
+        <div class="perf-bar-wrap"><div class="perf-bar-track"><div class="perf-bar-fill gold" data-width="78"></div></div></div>
+      </div>
+      <div class="stat-card reveal" style="transition-delay:.2s">
+        <span class="stat-num" data-count="114" data-prefix="">0</span>
+        <span class="stat-label">Confirmed Conversions</span>
+        <span class="stat-sub" style="color:var(--mist)">66 Calls · 48 Directions · $1.76 CPA</span>
+        <div class="perf-bar-wrap"><div class="perf-bar-track"><div class="perf-bar-fill green" data-width="55"></div></div></div>
+      </div>
+      <div class="stat-card reveal" style="transition-delay:.3s">
+        <span class="stat-num" data-count="0" data-is-zero="true" style="color:var(--red)">—</span>
+        <span class="stat-label">Booking Conversions Tracked</span>
+        <span class="stat-sub" style="color:var(--red);font-size:.7rem;">Google tag not installed on website</span>
+        <div class="perf-bar-wrap"><div class="perf-bar-track"><div class="perf-bar-fill red" data-width="3"></div></div></div>
+      </div>
+    </div>
+
+    <div class="alert-box reveal" style="transition-delay:.2s">
+      <div class="alert-label"><div class="pulse-dot"></div>Root Cause — Critical</div>
+      <p style="font-size:.88rem;line-height:1.7;color:var(--white);font-weight:500;margin-bottom:.6rem;">The Google Ads tracking tag has never been installed on paintedblack.club.</p>
+      <p style="font-size:.78rem;color:var(--mist);line-height:1.6;">Every website conversion action in this account — including both booking tracking attempts — has been inactive since the day it was created. The campaign budgets are spending. The algorithm has no feedback loop. This is the single most important issue to fix before any other optimisation is meaningful.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ CAMPAIGNS -->
+<section id="campaigns" style="background:var(--deep);">
+  <div class="container">
+    <div class="eyebrow reveal">02 — Active Campaign Analysis</div>
+    <h2 class="section-title reveal" style="transition-delay:.1s">Two campaigns.<br>One working. One blind.</h2>
+
+    <div class="campaigns-grid">
+
+      <!-- CAMPAIGN 1: BROKEN -->
+      <div class="campaign-card broken reveal-left">
+        <div class="campaign-card-header">
+          <div class="campaign-name">"Craving the best pasta ever?"</div>
+          <div class="status-badge status-error">Target Spend</div>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <span class="metric-val" data-count="48214">0</span>
+            <span class="metric-key">Impressions</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-val" data-count="1947">0</span>
+            <span class="metric-key">Clicks</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-val">4.04<small style="font-size:.9rem">%</small></span>
+            <span class="metric-key">CTR</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-val">$114<small style="font-size:.9rem">.06</small></span>
+            <span class="metric-key">Spend (5 days)</span>
+          </div>
+        </div>
+        <div class="campaign-divider"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+          <div>
+            <span class="metric-val red" style="font-size:2.5rem;">0</span>
+            <span class="metric-key">Primary Conversions</span>
+          </div>
+          <div style="text-align:right;">
+            <span class="metric-val" style="font-size:1.5rem;color:var(--mist);">21</span>
+            <span class="metric-key">All Convs (invisible to bidding)</span>
+          </div>
+        </div>
+        <div class="campaign-type-badge">
+          <div class="type-dot" style="background:var(--mist);"></div>
+          Smart / Search Campaign — Keyword data hidden
+        </div>
+        <div class="violation-card" style="margin-top:1rem;">
+          <div class="violation-icon">⚠</div>
+          <div class="violation-text">
+            <strong>Bidding failure:</strong> TARGET_SPEND with zero conversion signal = algorithm optimising for clicks only. $114 spent with no goal-oriented learning.
+          </div>
+        </div>
+      </div>
+
+      <!-- CAMPAIGN 2: WORKING (WITH POLICY ISSUE) -->
+      <div class="campaign-card working reveal-right">
+        <div class="campaign-card-header">
+          <div class="campaign-name">"Local store visits & promotions — Italiano"</div>
+          <div class="status-badge status-enabled">Performance Max</div>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-item">
+            <span class="metric-val" data-count="28097">0</span>
+            <span class="metric-key">Impressions</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-val" data-count="2075">0</span>
+            <span class="metric-key">Clicks</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-val">7.39<small style="font-size:.9rem">%</small></span>
+            <span class="metric-key">CTR — Excellent</span>
+          </div>
+          <div class="metric-item">
+            <span class="metric-val">$200<small style="font-size:.9rem">.51</small></span>
+            <span class="metric-key">Spend (5 days)</span>
+          </div>
+        </div>
+        <div class="campaign-divider"></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;">
+          <div>
+            <span class="metric-val green" style="font-size:2.5rem;" data-count="114">0</span>
+            <span class="metric-key">Conversions ✓</span>
+          </div>
+          <div style="text-align:right;">
+            <span class="metric-val gold" style="font-size:1.5rem;">$1.76</span>
+            <span class="metric-key">Cost Per Conversion</span>
+          </div>
+        </div>
+        <div class="campaign-type-badge">
+          <div class="type-dot" style="background:var(--green);"></div>
+          Performance Max · 99% Mobile · GBP-linked
+        </div>
+        <div class="violation-card" style="margin-top:1rem;">
+          <div class="violation-icon">⚡</div>
+          <div class="violation-text">
+            <strong style="color:var(--amber);">Policy violation: Alcohol information.</strong> Status: Eligible (Limited). All asset groups restricted. Campaign is running but reaching fewer people than possible. Fix: remove alcohol references from ad assets.
+          </div>
+        </div>
+        <div style="margin-top:.8rem;padding:.8rem 1rem;border-radius:8px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);">
+          <div style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.12em;color:var(--amber);text-transform:uppercase;margin-bottom:.4rem;">Limited by Budget</div>
+          <div style="font-size:.72rem;color:var(--mist);">Demand exceeds $30/day cap — more conversions available if budget increased.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PMAX ASSET GAPS -->
+    <div style="margin-top:2.5rem;" class="reveal">
+      <div class="eyebrow" style="margin-bottom:1.5rem;">PMax Asset Group Gaps — "Italian Pasta"</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;">
+        <div class="card card-green" style="padding:1.5rem;">
+          <div style="font-size:1.2rem;margin-bottom:.5rem;">🖼</div>
+          <div class="card-title">Images</div>
+          <div style="font-size:.72rem;color:var(--green);font-family:'JetBrains Mono',monospace;">✓ Present</div>
+          <div style="font-size:.7rem;color:var(--mist);margin-top:.3rem;">Check for alcohol content triggering policy</div>
+        </div>
+        <div class="card card-green" style="padding:1.5rem;">
+          <div style="font-size:1.2rem;margin-bottom:.5rem;">✏️</div>
+          <div class="card-title">Headlines (15)</div>
+          <div style="font-size:.72rem;color:var(--green);font-family:'JetBrains Mono',monospace;">✓ Present</div>
+          <div style="font-size:.7rem;color:var(--mist);margin-top:.3rem;">Remove aperitivo/drinks references</div>
+        </div>
+        <div class="card card-green" style="padding:1.5rem;">
+          <div style="font-size:1.2rem;margin-bottom:.5rem;">📝</div>
+          <div class="card-title">Descriptions</div>
+          <div style="font-size:.72rem;color:var(--green);font-family:'JetBrains Mono',monospace;">✓ Present</div>
+          <div style="font-size:.7rem;color:var(--mist);margin-top:.3rem;">Audit for alcohol mentions</div>
+        </div>
+        <div class="card card-red" style="padding:1.5rem;">
+          <div style="font-size:1.2rem;margin-bottom:.5rem;">🔗</div>
+          <div class="card-title">Sitelinks</div>
+          <div style="font-size:.72rem;color:var(--red);font-family:'JetBrains Mono',monospace;">✗ Missing</div>
+          <div style="font-size:.7rem;color:var(--mist);margin-top:.3rem;">Add: Book Table, Menu, Find Us, About</div>
+        </div>
+        <div class="card card-red" style="padding:1.5rem;">
+          <div style="font-size:1.2rem;margin-bottom:.5rem;">🎬</div>
+          <div class="card-title">Videos</div>
+          <div style="font-size:.72rem;color:var(--red);font-family:'JetBrains Mono',monospace;">✗ Missing</div>
+          <div style="font-size:.7rem;color:var(--mist);margin-top:.3rem;">Add 15–30s restaurant atmosphere reel</div>
+        </div>
+        <div class="card card-red" style="padding:1.5rem;">
+          <div style="font-size:1.2rem;margin-bottom:.5rem;">👥</div>
+          <div class="card-title">Audience Signals</div>
+          <div style="font-size:.72rem;color:var(--red);font-family:'JetBrains Mono',monospace;">✗ None</div>
+          <div style="font-size:.7rem;color:var(--mist);margin-top:.3rem;">Add Italian speakers, restaurant intent, tourists</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ DIVIDER QUOTE -->
+<div class="divider-section">
+  <div class="divider-bg"></div>
+  <div class="divider-quote reveal">
+    <blockquote>"Your conversion tracking is set up. Your reservations just cannot be counted — yet."</blockquote>
+    <cite>Audit Finding — Account 617-879-6307</cite>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════ CONVERSIONS -->
+<section id="conversions">
+  <div class="container">
+    <div class="eyebrow reveal">03 — Conversion Tracking Audit</div>
+    <h2 class="section-title reveal" style="transition-delay:.1s">16 conversion actions.<br>2 are working.<br>3 belong to other businesses.</h2>
+
+    <div class="issues-list">
+
+      <div class="issue-row crit reveal" style="transition-delay:.05s">
+        <span class="severity-badge sev-crit">Critical</span>
+        <div>
+          <div class="issue-name">Google Ads tag not installed on paintedblack.club</div>
+          <div class="issue-desc">Root cause of all inactive website conversions. Wix site has no Google tag connected. All website-based tracking is dead.</div>
+        </div>
+        <div class="issue-status">Tag Status<br>NOT FOUND</div>
+      </div>
+
+      <div class="issue-row crit reveal" style="transition-delay:.1s">
+        <span class="severity-badge sev-crit">Critical</span>
+        <div>
+          <div class="issue-name">"Table Booked" — GTM tag never built</div>
+          <div class="issue-desc">Conversion label u2JNCMuZuLgaEJjIqf0C exists in Google Ads. GTM tag was never created. Manual event requires data layer push from booking widget.</div>
+        </div>
+        <div class="issue-status">Status<br>INACTIVE</div>
+      </div>
+
+      <div class="issue-row crit reveal" style="transition-delay:.15s">
+        <span class="severity-badge sev-crit">Critical</span>
+        <div>
+          <div class="issue-name">"Contact Us" linked to senstylable.com GA4 — wrong website</div>
+          <div class="issue-desc">GA4 property: "www.senstylable.com — GA4". A fashion brand's contact data is importing into this restaurant's Google Ads account. Data contamination.</div>
+        </div>
+        <div class="issue-status">Source<br>WRONG DOMAIN</div>
+      </div>
+
+      <div class="issue-row crit reveal" style="transition-delay:.2s">
+        <span class="severity-badge sev-crit">Delete</span>
+        <div>
+          <div class="issue-name">"Contact (Page load: instagram.com/paintedblacktirana)"</div>
+          <div class="issue-desc">Tracks visits to instagram.com as a "Contact" conversion. Google tag cannot be installed on Instagram. Created 1 Nov 2024. Has never fired and never will.</div>
+        </div>
+        <div class="issue-status">Status<br>IMPOSSIBLE</div>
+      </div>
+
+      <div class="issue-row crit reveal" style="transition-delay:.25s">
+        <span class="severity-badge sev-crit">Delete</span>
+        <div>
+          <div class="issue-name">"Contact Bergamot Media" — wrong business entity</div>
+          <div class="issue-desc">Created 28 Feb 2025. Conversion label 70pzCMXc-6MaEJjIqf0C. Built for bergamot-media.com lead generation. Has no connection to Painted Black.</div>
+        </div>
+        <div class="issue-status">Entity<br>WRONG BUSINESS</div>
+      </div>
+
+      <div class="issue-row high reveal" style="transition-delay:.3s">
+        <span class="severity-badge sev-high">High</span>
+        <div>
+          <div class="issue-name">"Calls from Ads" assigned to Get Directions goal</div>
+          <div class="issue-desc">Created April 2026. Phone calls classified as direction intent. Wrong goal category sends incorrect signal to bidding algorithm.</div>
+        </div>
+        <div class="issue-status">Goal<br>MISCLASSIFIED</div>
+      </div>
+
+      <div class="issue-row high reveal" style="transition-delay:.35s">
+        <span class="severity-badge sev-high">Fix</span>
+        <div>
+          <div class="issue-name">"Subscribe" conversion — right URL, wrong trigger point</div>
+          <div class="issue-desc">Tracks /reservation?reservationId= — which IS the correct confirmation URL. Once tag installed on Wix, this will fire on every completed booking. Rename to "Reservation Completed".</div>
+        </div>
+        <div class="issue-status">URL Trigger<br>CORRECT</div>
+      </div>
+
+      <div class="issue-row ok reveal" style="transition-delay:.4s">
+        <span class="severity-badge sev-ok">Working</span>
+        <div>
+          <div class="issue-name">Business Profile — Directions + Calls</div>
+          <div class="issue-desc">65 direction requests + 70 calls recorded. Source: Google Business Profile. These are the only two conversion actions generating real data.</div>
+        </div>
+        <div class="issue-status">Conversions<br>135 TOTAL</div>
+      </div>
+
+    </div>
+
+    <!-- CLEAN TARGET ARCHITECTURE -->
+    <div style="margin-top:3rem;" class="reveal">
+      <div class="eyebrow" style="margin-bottom:1.5rem;">Target Architecture — After Fixes</div>
+      <div class="arch-grid">
+        <div class="arch-card keep">
+          <div class="arch-card-icon">📅</div>
+          <div class="arch-card-name">Reservation Completed</div>
+          <div class="arch-card-detail">Website · /reservation?reservationId=</div>
+          <div class="arch-card-verdict arch-keep">PRIMARY</div>
+        </div>
+        <div class="arch-card keep">
+          <div class="arch-card-icon">📞</div>
+          <div class="arch-card-name">Business Profile Call</div>
+          <div class="arch-card-detail">Google Business Profile</div>
+          <div class="arch-card-verdict arch-keep">PRIMARY</div>
+        </div>
+        <div class="arch-card keep">
+          <div class="arch-card-icon">🗺</div>
+          <div class="arch-card-name">Business Profile Directions</div>
+          <div class="arch-card-detail">Google Business Profile</div>
+          <div class="arch-card-verdict arch-keep">PRIMARY</div>
+        </div>
+        <div class="arch-card keep">
+          <div class="arch-card-icon">📱</div>
+          <div class="arch-card-name">Calls from Ads</div>
+          <div class="arch-card-detail">Call from Ads · 60s min</div>
+          <div class="arch-card-verdict arch-keep">PRIMARY</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:1rem;font-size:.7rem;color:var(--whisper);font-style:italic;">
+        All 12 remaining legacy, duplicate, and wrong-entity conversion actions → Remove
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ WEBSITE -->
+<section id="website" style="background:var(--black);">
+  <div class="website-bg-img"></div>
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="eyebrow reveal">04 — Website & Booking Flow</div>
+    <h2 class="section-title reveal" style="transition-delay:.1s">The booking funnel.<br>Step 3 is where conversions happen.</h2>
+
+    <div class="flow-steps reveal" style="transition-delay:.2s;">
+      <div class="flow-step">
+        <div class="flow-step-num">1</div>
+        <div class="flow-step-label">Entry Point</div>
+        <div class="flow-step-url">paintedblack.club</div>
+        <div style="font-size:.65rem;color:var(--whisper);margin-top:.3rem;">Homepage / Any page</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">2</div>
+        <div class="flow-step-label">Booking Form</div>
+        <div class="flow-step-url">paintedblack.club/reservations</div>
+        <div style="font-size:.65rem;color:var(--whisper);margin-top:.3rem;">Wix Restaurants widget · Select date/party</div>
+      </div>
+      <div class="flow-step target">
+        <div class="flow-step-num">3</div>
+        <div class="flow-step-label">Booking Confirmed ← Track Here</div>
+        <div class="flow-step-url">paintedblack.club/reservation?reservationId=[ID]</div>
+        <div class="flow-tag">✓ This is the correct conversion trigger point</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2.5rem;">
+      <div class="alert-box-green alert-box reveal" style="transition-delay:.1s;">
+        <div class="alert-label"><div class="pulse-dot" style="background:var(--green);"></div>Good News</div>
+        <p style="font-size:.82rem;color:var(--white);font-weight:500;margin-bottom:.4rem;">The confirmation URL trigger is already correctly configured.</p>
+        <p style="font-size:.75rem;color:var(--mist);line-height:1.6;">The "reservationId=" query parameter only appears after a successful booking. Once the Google tag is installed on Wix, this conversion fires automatically for every completed table reservation. No URL changes needed.</p>
+      </div>
+      <div class="card" style="padding:1.8rem;" class="reveal">
+        <div class="eyebrow" style="font-size:.6rem;margin-bottom:1rem;">Platform Details</div>
+        <div style="display:flex;flex-direction:column;gap:.8rem;">
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;">
+            <span style="color:var(--mist);">Website Platform</span>
+            <span style="color:var(--white);font-family:'JetBrains Mono',monospace;font-size:.7rem;">Wix</span>
+          </div>
+          <div style="height:1px;background:var(--glass-border);"></div>
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;">
+            <span style="color:var(--mist);">Booking System</span>
+            <span style="color:var(--white);font-family:'JetBrains Mono',monospace;font-size:.7rem;">Wix Restaurants</span>
+          </div>
+          <div style="height:1px;background:var(--glass-border);"></div>
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;">
+            <span style="color:var(--mist);">Online Ordering</span>
+            <span style="color:var(--mist);font-family:'JetBrains Mono',monospace;font-size:.7rem;">Wolt (external)</span>
+          </div>
+          <div style="height:1px;background:var(--glass-border);"></div>
+          <div style="display:flex;justify-content:space-between;font-size:.75rem;">
+            <span style="color:var(--mist);">Google Tag Status</span>
+            <span style="color:var(--red);font-family:'JetBrains Mono',monospace;font-size:.7rem;">NOT INSTALLED</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FIXES -->
+<section id="fixes">
+  <div class="container">
+    <div class="eyebrow reveal">05 — Implementation Guide</div>
+    <h2 class="section-title reveal" style="transition-delay:.1s">Seven fixes.<br>In this exact order.</h2>
+
+    <div class="fixes-list">
+
+      <div class="fix-item p1 reveal">
+        <div class="fix-num">01</div>
+        <div>
+          <span class="fix-priority">P1 — Urgent</span>
+          <div class="fix-title">Install Google Ads Tag on Wix Website</div>
+          <div class="fix-body">Everything depends on this. Without the base tag, no website conversion can fire.</div>
+          <div class="fix-steps">
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Wix Dashboard → Marketing & SEO → Marketing Integrations → Google Ads → Connect Account (617-879-6307)</span></div>
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Wix automatically installs the Google tag across all pages</span></div>
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Verify: Google Ads → Tools → Google Tag → confirm tag health status = Active</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fix-item p1 reveal" style="transition-delay:.05s;">
+        <div class="fix-num">02</div>
+        <div>
+          <span class="fix-priority">P1 — Urgent</span>
+          <div class="fix-title">Activate & Rename Booking Conversion</div>
+          <div class="fix-body">The "Subscribe (Page load)" conversion already has the correct URL. It just needs the tag to go live and a rename.</div>
+          <div class="fix-steps">
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Goals → Conversion Actions → "Subscribe (Page load...)" → Edit settings</span></div>
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Rename to: "Reservation Completed"</span></div>
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Change Action Optimization from "Subscribe" → "Purchase"</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fix-item p1 reveal" style="transition-delay:.1s;">
+        <div class="fix-num">03</div>
+        <div>
+          <span class="fix-priority">P1 — Urgent</span>
+          <div class="fix-title">Remove senstylable.com GA4 Import</div>
+          <div class="fix-body">The "Contact Us" conversion imports data from a fashion brand's GA4 property. Immediate removal required.</div>
+          <div class="fix-steps">
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Goals → "Contact Us" → 3-dot menu → Remove or set to Secondary</span></div>
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Confirm GA4 property "www.senstylable.com — GA4" has no connection to this account</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fix-item p1 reveal" style="transition-delay:.15s;">
+        <div class="fix-num">04</div>
+        <div>
+          <span class="fix-priority">P1 — Urgent</span>
+          <div class="fix-title">Delete Instagram & Bergamot Media Conversions</div>
+          <div class="fix-body">Neither can ever fire. Both belong to other entities. They pollute bidding signals and reporting.</div>
+          <div class="fix-steps">
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Delete: "Contact (Page load: instagram.com/paintedblacktirana)"</span></div>
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Delete: "Contact Bergamot Media" (label: 70pzCMXc-6MaEJjIqf0C)</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fix-item p2 reveal" style="transition-delay:.2s;">
+        <div class="fix-num">05</div>
+        <div>
+          <span class="fix-priority">P2 — This Week</span>
+          <div class="fix-title">Fix Policy Violation — Alcohol Information</div>
+          <div class="fix-body">PMax campaign is "Eligible (Limited)". Alcohol references in assets restrict reach. Remove to restore full eligibility.</div>
+          <div class="fix-steps">
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Review all headlines/descriptions in "Asset Group 1 — Italian Pasta" for alcohol mentions (aperitivo, cocktails, wine)</span></div>
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Review image assets for cocktail/wine visuals</span></div>
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Add age restriction targeting (18+) as alternative to content removal</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fix-item p2 reveal" style="transition-delay:.25s;">
+        <div class="fix-num">06</div>
+        <div>
+          <span class="fix-priority">P2 — This Week</span>
+          <div class="fix-title">Add Audience Signals + Missing Assets to PMax</div>
+          <div class="fix-body">No audience signals = cold learning. Missing sitelinks and videos = Average ad strength instead of Excellent.</div>
+          <div class="fix-steps">
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Add audience signals: Italian-language users, restaurant intent, Albania tourists, food & dining</span></div>
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Add sitelinks: Book a Table, View Menu, Find Us, About Painted Black</span></div>
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Upload a 15–30 second restaurant atmosphere video</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fix-item p3 reveal" style="transition-delay:.3s;">
+        <div class="fix-num">07</div>
+        <div>
+          <span class="fix-priority">P3 — Week 2</span>
+          <div class="fix-title">Rebuild Search Campaign with Italian Keyword Structure</div>
+          <div class="fix-body">Replace the Smart Campaign with a standard Search campaign using explicit Italian-language keywords, proper match types, and negative keyword list.</div>
+          <div class="fix-steps">
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Ad Group 1: Ristorante Italiano — "ristorante italiano tirana", "pasta tirana"</span></div>
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Ad Group 2: Prenotazione — "prenotare tavolo tirana", "cena romantica tirana"</span></div>
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Location targeting: Presence only (NOT "Presence or interest") — critical setting</span></div>
+            <div class="fix-step"><span class="fix-step-num">→</span><span class="fix-step-text">Switch to Maximize Conversions after 15+ reservation conversions are recorded</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ ACCOUNT STRUCTURE -->
+<section id="account" style="background:var(--deep);">
+  <div class="container">
+    <div class="eyebrow reveal">06 — Critical Account Structure Issue</div>
+
+    <div class="account-warning reveal" style="transition-delay:.1s;">
+      <div class="warning-label"><div class="pulse-dot"></div>Multi-Business Contamination</div>
+      <div class="warning-title">This account has been running<br>three different businesses simultaneously.</div>
+      <p style="font-size:.82rem;color:var(--mist);line-height:1.7;margin-top:.8rem;">Google's Smart Bidding learns from the entire account history. When that history includes B2B media buying conversions from Bergamot Media and fashion brand contact submissions from Senstylable, the algorithm's understanding of a high-value customer is corrupted for the restaurant use case.</p>
+
+      <div class="businesses-row" style="margin-top:1.5rem;">
+        <div class="biz-chip restaurant">✓ Painted Black Restaurant — paintedblack.club</div>
+        <div class="biz-chip other">✗ Bergamot Media — bergamot-media.com</div>
+        <div class="biz-chip other">✗ Senstylable — senstylable.com</div>
+      </div>
+    </div>
+
+    <div class="compare-grid reveal" style="transition-delay:.2s;">
+      <div class="compare-col stay">
+        <div class="compare-col-title">✗ Staying in Current Account</div>
+        <div class="compare-item"><span class="compare-icon">—</span>Mixed historical data always present</div>
+        <div class="compare-item"><span class="compare-icon">—</span>Algorithm trained on multi-business signals</div>
+        <div class="compare-item"><span class="compare-icon">—</span>Ongoing cross-contamination risk</div>
+        <div class="compare-item"><span class="compare-icon">—</span>Quality Score history is mixed across industries</div>
+        <div class="compare-item"><span class="compare-icon">+</span>5 days of PMax conversion data preserved</div>
+      </div>
+      <div class="compare-col fresh">
+        <div class="compare-col-title">✓ New Dedicated Account</div>
+        <div class="compare-item"><span class="compare-icon">+</span>Clean slate — restaurant data only from day 1</div>
+        <div class="compare-item"><span class="compare-icon">+</span>Algorithm learns purely from restaurant behaviour</div>
+        <div class="compare-item"><span class="compare-icon">+</span>Full separation — zero contamination risk</div>
+        <div class="compare-item"><span class="compare-icon">+</span>Build Quality Score correctly from scratch</div>
+        <div class="compare-item"><span class="compare-icon">—</span>Lose 5 days of data (negligible at this stage)</div>
+      </div>
+    </div>
+
+    <div class="alert-box-gold alert-box reveal" style="margin-top:2rem;transition-delay:.3s;">
+      <div class="alert-label"><div class="pulse-dot"></div>Recommendation</div>
+      <p style="font-size:.85rem;color:var(--white);font-weight:500;margin-bottom:.4rem;">Create a new dedicated Google Ads account for Painted Black. Now is the ideal time.</p>
+      <p style="font-size:.75rem;color:var(--mist);line-height:1.7;">Both active campaigns are only 5 days old. The PMax campaign can be recreated in under an hour — copy settings, assets, and GBP link. The 114 conversions are a useful benchmark but not worth keeping if they compromise long-term data integrity. A clean account will outperform the current one within 2–3 weeks once properly configured.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ ACTION PLAN -->
+<section id="action" style="background:var(--black);">
+  <div class="container">
+    <div class="eyebrow reveal">07 — Prioritised Action Plan</div>
+    <h2 class="section-title reveal" style="transition-delay:.1s;">Four weeks to<br>a clean, converting account.</h2>
+
+    <div class="timeline">
+      <div class="timeline-item reveal">
+        <div class="timeline-week">Week 1<small>Urgent</small></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-items">
+          <div class="timeline-task"><span class="task-priority tp1">P1</span> Install Google Ads tag on Wix via Marketing Integrations</div>
+          <div class="timeline-task"><span class="task-priority tp1">P1</span> Rename "Subscribe" conversion → "Reservation Completed" · change goal to Purchase</div>
+          <div class="timeline-task"><span class="task-priority tp1">P1</span> Remove senstylable.com GA4 import from "Contact Us"</div>
+          <div class="timeline-task"><span class="task-priority tp1">P1</span> Delete Instagram & Bergamot Media conversion actions</div>
+          <div class="timeline-task"><span class="task-priority tp2">P2</span> Fix "Calls from Ads" goal → move to Phone call lead</div>
+          <div class="timeline-task"><span class="task-priority tp2">P2</span> Remove / set secondary all 2022 legacy conversion actions</div>
+          <div class="timeline-task"><span class="task-priority tp2">P2</span> Verify location targeting: Presence only (not Presence or interest)</div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal" style="transition-delay:.1s;">
+        <div class="timeline-week">Week 2<small>Build</small></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-items">
+          <div class="timeline-task"><span class="task-priority tp2">P2</span> Test booking conversion: complete a test reservation, verify real-time firing</div>
+          <div class="timeline-task"><span class="task-priority tp2">P2</span> Fix PMax policy violation: remove alcohol references from asset group</div>
+          <div class="timeline-task"><span class="task-priority tp2">P2</span> Add audience signals: Italian speakers, restaurant intent, tourists</div>
+          <div class="timeline-task"><span class="task-priority tp2">P2</span> Add sitelinks and video to PMax asset group</div>
+          <div class="timeline-task"><span class="task-priority tp3">P3</span> Build new Search campaign: Italian keyword ad groups, Phrase/Exact match</div>
+          <div class="timeline-task"><span class="task-priority tp3">P3</span> Build Italian RSA ad copy with Location + Call extensions</div>
+        </div>
+      </div>
+
+      <div class="timeline-item reveal" style="transition-delay:.2s;">
+        <div class="timeline-week">Week 3–4<small>Optimise</small></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-items">
+          <div class="timeline-task"><span class="task-priority tp3">P3</span> Once 15+ reservation conversions recorded: switch Search to Maximize Conversions</div>
+          <div class="timeline-task"><span class="task-priority tp3">P3</span> Review PMax budget: if Limited by Budget confirmed, test +$10/day increase</div>
+          <div class="timeline-task"><span class="task-priority tp4">P4</span> Decision point: migrate to new dedicated account if client agrees</div>
+          <div class="timeline-task"><span class="task-priority tp4">P4</span> Performance review vs this baseline — compare CPA, booking conversions, spend</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EXPECTED OUTCOMES -->
+    <div style="margin-top:3rem;" class="reveal">
+      <div class="eyebrow" style="margin-bottom:1.5rem;">Expected Outcomes After Full Implementation</div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;">
+        <div class="card" style="padding:1.8rem;text-align:center;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--green);">Full</div>
+          <div style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mist);margin-top:.3rem;">Booking Conversion Visibility</div>
+          <div style="font-size:.68rem;color:var(--whisper);margin-top:.4rem;">Currently: 0 tracked</div>
+        </div>
+        <div class="card" style="padding:1.8rem;text-align:center;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--gold);">4</div>
+          <div style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mist);margin-top:.3rem;">Clean Conversion Actions</div>
+          <div style="font-size:.68rem;color:var(--whisper);margin-top:.4rem;">Currently: 16 (mostly broken or junk)</div>
+        </div>
+        <div class="card" style="padding:1.8rem;text-align:center;">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:300;color:var(--blue);">Smart</div>
+          <div style="font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mist);margin-top:.3rem;">Bidding On Real Goals</div>
+          <div style="font-size:.68rem;color:var(--whisper);margin-top:.4rem;">Currently: optimising for clicks only</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ FOOTER -->
+<footer>
+  <div class="footer-content">
+    <div class="footer-left">
+      <div class="footer-restaurant">Painted Black</div>
+      <div class="footer-tagline">Rruga Hajdar Hidi 5-8, Tiranë 1001 · paintedblack.club</div>
+    </div>
+    <div class="footer-right">
+      <div class="footer-meta">
+        Google Ads Account: 617-879-6307<br>
+        Audit Date: June 2026<br>
+        Data Period: June 5–10, 2026<br>
+        Confidential — For Client Use Only
+      </div>
+    </div>
+  </div>
+</footer>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+// ═══════════════════════════════════════════════
+// THREE.JS — PARTICLE UNIVERSE
+// ═══════════════════════════════════════════════
+const canvas = document.getElementById('bg-canvas');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0x000000, 0);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(0, 0, 90);
+
+// ── PARTICLES ──
+const pCount = 2200;
+const pGeo = new THREE.BufferGeometry();
+const positions = new Float32Array(pCount * 3);
+const colors = new Float32Array(pCount * 3);
+const sizes = new Float32Array(pCount);
+
+const goldColors = [
+  [0.788, 0.635, 0.153],
+  [0.9, 0.75, 0.3],
+  [0.6, 0.45, 0.1],
+  [1.0, 0.88, 0.5],
+];
+
+for (let i = 0; i < pCount; i++) {
+  positions[i*3]   = (Math.random() - 0.5) * 220;
+  positions[i*3+1] = (Math.random() - 0.5) * 180;
+  positions[i*3+2] = (Math.random() - 0.5) * 140;
+  const c = goldColors[Math.floor(Math.random() * goldColors.length)];
+  colors[i*3]   = c[0];
+  colors[i*3+1] = c[1];
+  colors[i*3+2] = c[2];
+  sizes[i] = Math.random() * 2 + 0.5;
+}
+
+pGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+pGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+pGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+const pMat = new THREE.PointsMaterial({
+  size: 1.2, vertexColors: true,
+  transparent: true, opacity: 0.55,
+  sizeAttenuation: true,
+});
+const particles = new THREE.Points(pGeo, pMat);
+scene.add(particles);
+
+// ── FLOATING WIREFRAME SHAPES ──
+const shapeCount = 12;
+const shapes = [];
+const shapeGeos = [
+  new THREE.IcosahedronGeometry(4, 0),
+  new THREE.OctahedronGeometry(5, 0),
+  new THREE.TetrahedronGeometry(4.5, 0),
+  new THREE.IcosahedronGeometry(2.5, 0),
+];
+const wireMat = new THREE.MeshBasicMaterial({
+  color: 0xC9A227, wireframe: true, transparent: true, opacity: 0.06
+});
+const wireMat2 = new THREE.MeshBasicMaterial({
+  color: 0x3B82F6, wireframe: true, transparent: true, opacity: 0.04
+});
+
+for (let i = 0; i < shapeCount; i++) {
+  const geo = shapeGeos[Math.floor(Math.random() * shapeGeos.length)];
+  const mat = Math.random() > 0.6 ? wireMat2 : wireMat;
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.position.set(
+    (Math.random() - 0.5) * 160,
+    (Math.random() - 0.5) * 120,
+    (Math.random() - 0.5) * 80
+  );
+  const s = 0.4 + Math.random() * 2;
+  mesh.scale.set(s, s, s);
+  mesh.userData.rotX = (Math.random() - 0.5) * 0.003;
+  mesh.userData.rotY = (Math.random() - 0.5) * 0.004;
+  mesh.userData.rotZ = (Math.random() - 0.5) * 0.002;
+  mesh.userData.floatSpeed = 0.0003 + Math.random() * 0.0005;
+  mesh.userData.floatAmp = 0.8 + Math.random() * 1.5;
+  mesh.userData.floatOffset = Math.random() * Math.PI * 2;
+  scene.add(mesh);
+  shapes.push(mesh);
+}
+
+// ── CONNECTING LINES ──
+const lineMat = new THREE.LineBasicMaterial({
+  color: 0xC9A227, transparent: true, opacity: 0.04
+});
+for (let i = 0; i < 8; i++) {
+  const a = shapes[Math.floor(Math.random() * shapes.length)];
+  const b = shapes[Math.floor(Math.random() * shapes.length)];
+  if (a === b) continue;
+  const lineGeo = new THREE.BufferGeometry().setFromPoints([
+    a.position.clone(), b.position.clone()
+  ]);
+  scene.add(new THREE.Line(lineGeo, lineMat));
+}
+
+// ── MOUSE PARALLAX ──
+let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
+document.addEventListener('mousemove', e => {
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 8;
+  mouseY = -(e.clientY / window.innerHeight - 0.5) * 5;
+});
+
+// ── ANIMATE ──
+let time = 0;
+const pPositions = pGeo.attributes.position.array;
+const initialPositions = new Float32Array(positions);
+
+function animate() {
+  requestAnimationFrame(animate);
+  time += 0.001;
+
+  // Drift particles upward
+  for (let i = 0; i < pCount; i++) {
+    pPositions[i*3+1] += 0.008 + (i % 7) * 0.001;
+    if (pPositions[i*3+1] > 90) pPositions[i*3+1] = -90;
+  }
+  pGeo.attributes.position.needsUpdate = true;
+
+  // Rotate/float shapes
+  shapes.forEach((s, i) => {
+    s.rotation.x += s.userData.rotX;
+    s.rotation.y += s.userData.rotY;
+    s.rotation.z += s.userData.rotZ;
+    s.position.y += Math.sin(time * s.userData.floatSpeed * 100 + s.userData.floatOffset) * s.userData.floatAmp * 0.002;
+  });
+
+  // Camera parallax
+  targetX += (mouseX - targetX) * 0.03;
+  targetY += (mouseY - targetY) * 0.03;
+  camera.position.x = targetX;
+  camera.position.y = 8 + targetY;
+  camera.lookAt(0, 0, 0);
+
+  // Slow orbit
+  particles.rotation.y = time * 0.025;
+
+  renderer.render(scene, camera);
+}
+animate();
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// ═══════════════════════════════════════════════
+// SCROLL REVEAL — INTERSECTION OBSERVER
+// ═══════════════════════════════════════════════
+const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+revealEls.forEach(el => revealObs.observe(el));
+
+// ═══════════════════════════════════════════════
+// ANIMATED COUNTERS
+// ═══════════════════════════════════════════════
+function animateCounter(el) {
+  const target = parseInt(el.dataset.count);
+  if (isNaN(target)) return;
+  const duration = 1800;
+  const start = performance.now();
+  const fmt = n => n >= 1000 ? (n >= 10000 ? n.toLocaleString() : n.toLocaleString()) : n;
+
+  function step(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = Math.floor(eased * target);
+    el.textContent = fmt(current);
+    if (progress < 1) requestAnimationFrame(step);
+    else el.textContent = fmt(target);
+  }
+  requestAnimationFrame(step);
+}
+
+const counterObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.classList.contains('counted')) {
+      e.target.classList.add('counted');
+      animateCounter(e.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('[data-count]').forEach(el => counterObs.observe(el));
+
+// ═══════════════════════════════════════════════
+// PERF BAR ANIMATIONS
+// ═══════════════════════════════════════════════
+const barObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const fill = e.target;
+      fill.style.width = fill.dataset.width + '%';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.perf-bar-fill[data-width]').forEach(el => barObs.observe(el));
+
+// ═══════════════════════════════════════════════
+// NAV ACTIVE STATE + SHRINK ON SCROLL
+// ═══════════════════════════════════════════════
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+window.addEventListener('scroll', () => {
+  const scrollY = window.scrollY;
+
+  // Update active nav link
+  sections.forEach(s => {
+    const top = s.offsetTop - 100;
+    const bottom = top + s.offsetHeight;
+    if (scrollY >= top && scrollY < bottom) {
+      const id = s.getAttribute('id');
+      navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+      });
+    }
+  });
+});
+
+// ═══════════════════════════════════════════════
+// HERO STAGGERED REVEAL ON LOAD
+// ═══════════════════════════════════════════════
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('#hero .reveal').forEach((el, i) => {
+      setTimeout(() => el.classList.add('visible'), i * 150);
+    });
+  }, 200);
+});
+</script>
+</body>
+</html>
